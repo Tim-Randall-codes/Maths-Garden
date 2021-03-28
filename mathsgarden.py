@@ -1,0 +1,126 @@
+import tkinter as tk
+import csv
+from random import randint
+
+win2 = tk.Tk()
+win3 = tk.Tk()
+var = tk.IntVar()
+gtype = ''
+
+def gamer():
+    pass
+
+def addg():
+    global gtype
+    gtype = '+'
+    game()
+
+def subg():
+    global gtype
+    gtype = '-'
+    game()
+
+def multg():
+    global gtype
+    gtype = '*'
+    game()
+
+def divg():
+    global gtype
+    gtype = '/'
+    game()
+
+def allg():
+    global gtype
+    gtype = 'all'
+    game()
+
+def game():
+    win3.deiconify()
+    win3.geometry('800x600')
+    win3.title('Go, go, GO!! ^^')
+    digs = (str(var.get()))
+    if digs == 1 or digs == 0:
+        rn = randint(0, 9)
+        rn2 = randint(0, 9)
+    elif digs == 2:
+        rn = randint(10, 99)
+        rn2 = randint(10, 99)
+    else:
+        rn = randint(100, 999)
+        rn2 = randint(100, 999)
+    explaing = tk.Label(win3, text='Put your answer in the box and answer')
+    explaing.grid(column=0, row=0)
+    explaing2 = tk.Label(win3, text='See how many you can do in two minutes')
+    explaing2.grid(column=0, row=1)
+    qdisplay = tk.Label(win3, text='')
+    qdisplay.grid(column=0, row=2, sticky=tk.W)
+    answere = tk.Entry(win3, width=15)
+    answere.grid(column=1, row=2)
+    answerb = tk.Button(win3, text='Answer', command=game)
+    answerb.grid(column=2, row=2)
+    print(gtype)
+    print(rn)
+    win2.withdraw()
+    win3.mainloop()
+    
+def menu():
+    global win1
+    win1.destroy()
+    win2.deiconify()
+    win2.geometry('800x600')
+    win2.title('Maths Garden')
+    addl = tk.Label(win2, text="Addition game: See how many addition problems \
+you can do in two minutes")
+    addl.grid(column=0, row=0, sticky=tk.W)
+    subl = tk.Label(win2, text="Subtraction game: See how many subtraction \
+problems you can do in two minutes")
+    subl.grid(column=0, row=1, sticky=tk.W)
+    multl = tk.Label(win2, text="Multiplication game: See how many multiplication\
+ problems you can do in two minutes")
+    multl.grid(column=0, row=2, sticky=tk.W)
+    divl = tk.Label(win2, text="Division game: See how many division problems \
+you can do in two minutes")
+    divl.grid(column=0, row=3, sticky=tk.W)
+    allgamel = tk.Label(win2, text="All game: consists of addition, subtraction\
+ multiplication, division problems")
+    allgamel.grid(column=0, row=4, sticky=tk.W)
+    addb = tk.Button(win2, text="Play", command=addg)
+    addb.grid(column=1, row=0)
+    subb = tk.Button(win2, text="Play", command=subg)
+    subb.grid(column=1, row=1)
+    multb = tk.Button(win2, text="Play", command=multg)
+    multb.grid(column=1, row=2)
+    divb = tk.Button(win2, text="Play", command=divg)
+    divb.grid(column=1, row=3)
+    allb = tk.Button(win2, text="Play", command=allg)
+    allb.grid(column=1, row=4)
+
+    dl = tk.Label(win2, text="Select number of digits (if no selection one\
+ will be used as the default.")
+    dl.grid(column=0, row=5, sticky=tk.W)
+    d1 = tk.Radiobutton(win2, text="One digit", variable=var, value=1)
+    d1.grid(column=0, row=6)
+    d2 = tk.Radiobutton(win2, text="Two digits", variable=var, value=2)
+    d2.grid(column=0, row=7)
+    d3 = tk.Radiobutton(win2, text="Three digits", variable=var, value=3)
+    d3.grid(column=0, row=8)
+    win3.withdraw()
+    win2.mainloop()
+
+def window1():
+    global win1
+    win1 = tk.Tk()
+    win1.geometry('800x600')
+    win1.title('Maths Garden')
+    heading = tk.Label(win1, text="Maths Garden")
+    heading.grid(column=0, row=0, sticky=tk.N)
+    explain1 = tk.Label(win1, text='It is important to know maths')
+    explain1.grid(column=0, row=1, sticky=tk.N)
+    continueb = tk.Button(win1, text="Continue", command=menu)
+    continueb.grid(column=0, row=2, sticky=tk.N)
+    win3.withdraw()
+    win2.withdraw()
+    win1.mainloop()
+
+window1()

@@ -1,0 +1,25 @@
+Maths Garden
+
+Title page with title, explanation explaining why doing math in your head is important and continue
+Or exit buttons
+
+Menu page, Addition, game
+Subtraction game
+Multiplication game
+Division game
+Menu that asks how many digits. 
+View high scores
+Exit button
+
+Game screen: 
+Has explanation label
+Has two random numbers with symbol between them, if symbol is all it is determined randomly. 
+Timer countdown for two minutes is displayed
+Correct score is shown, added up
+Incorrect score is shown, added up 
+
+High scores, 
+Will keep score of most correct in two minutes
+Will compare the latest score with csv file of scores. If score > than csv file scores prompts 
+User to enter their name
+
