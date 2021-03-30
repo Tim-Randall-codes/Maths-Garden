@@ -6,6 +6,14 @@ win2 = tk.Tk()
 win3 = tk.Tk()
 var = tk.IntVar()
 gtype = ''
+ans = 0
+
+#make the things that the game function only creates once the game function
+#then the other things it has to do over and over can be different functions
+#for example creating the random numbers
+#comparing the user input to the answers
+#updating the scores of correct and incorrect.
+#determining if the user entered an integer or not
 
 def gamer():
     pass
@@ -39,11 +47,24 @@ def game():
     win3.deiconify()
     win3.geometry('800x600')
     win3.title('Go, go, GO!! ^^')
+    global digs
+    global answere
+    global entryerror
+    global rn
+    global rn2
+    global correct
+    global incorrect
+    global qdisplay
+    global cdisplay
+    global incdisplay
+    global userinput
+    correct = 0
+    incorrect = 0
     digs = (str(var.get()))
-    if digs == 1 or digs == 0:
+    if digs == '1' or digs == '0':
         rn = randint(0, 9)
         rn2 = randint(0, 9)
-    elif digs == 2:
+    elif digs == '2':
         rn = randint(10, 99)
         rn2 = randint(10, 99)
     else:
@@ -54,15 +75,83 @@ def game():
     explaing2 = tk.Label(win3, text='See how many you can do in two minutes')
     explaing2.grid(column=0, row=1)
     qdisplay = tk.Label(win3, text='')
-    qdisplay.grid(column=0, row=2, sticky=tk.W)
+    qdisplay.grid(column=0, row=2, sticky=tk.E)
+    resultd = tk.Label(win3, text='')
+    resultd.grid(column=1, row=1)
     answere = tk.Entry(win3, width=15)
     answere.grid(column=1, row=2)
-    answerb = tk.Button(win3, text='Answer', command=game)
+    entryerror = tk.Label(win3, text='')
+    entryerror.grid(column=1, row=3)
+    answerb = tk.Button(win3, text='Answer', command=gamecon)
     answerb.grid(column=2, row=2)
-    print(gtype)
-    print(rn)
+    cdisplay = tk.Label(win3, text="Correct: "+str(correct))
+    cdisplay.grid(column=3, row=0, sticky=tk.E)
+    incdisplay = tk.Label(win3, text="Incorrect: "+str(incorrect))
+    incdisplay.grid(column=3, row=1, sticky=tk.E)
+    qdisplay['text'] = str(rn) + ' ' + str(gtype) + ' '  + str(rn2) + ' ='
     win2.withdraw()
     win3.mainloop()
+    
+def gamecon():
+    global correct
+    global incorrect
+    letpass = True
+    while True:
+        try:
+            ans = int(answere.get())
+            letpass = True
+            break
+        except ValueError:
+            entryerror['text'] = 'Enter whole numbers only'
+            letpass = False
+            break
+    if letpass == True:
+        entryerror['text'] = ''
+        if gtype == '+':
+            if rn + rn2 == ans:
+                correct += 1
+                cdisplay['text'] = "Correct: " + str(correct)
+                rnreset()
+            else:
+                incorrect += 1
+                incdisplay['text'] = "Incorrect: " + str(incorrect)
+                rnreset()
+        elif gtype == '-':
+            if rn - rn2 == ans:
+                correct += 1
+                cdisplay['text'] = "Correct: " + str(correct)
+                rnreset()
+            else:
+                incorrect += 1
+                incdisplay['text'] = "Incorrect: " + str(incorrect)
+                rnreset()
+        elif gtype == '*':
+            if rn * rn2 == ans:
+                correct += 1
+                cdisplay['text'] = "Correct: " + str(correct)
+                rnreset()
+            else:
+                incorrect += 1
+                incdisplay['text']= "Incorrect: " + str(incorrect)
+                rnreset()
+        print(rn, rn2)
+        print(rn, rn2)
+    else:
+        pass
+
+def rnreset():
+    global rn
+    global rn2
+    if digs == '1' or digs == '0':
+        rn = randint(0, 9)
+        rn2 = randint(0, 9)
+    elif digs == '2':
+        rn = randint(10, 99)
+        rn2 = randint(10, 99)
+    else:
+        rn = randint(100, 999)
+        rn2 = randint(100, 999)
+    qdisplay['text'] = str(rn) + ' ' + str(gtype) + ' '  + str(rn2) + ' ='
     
 def menu():
     global win1
