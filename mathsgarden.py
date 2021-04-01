@@ -58,6 +58,11 @@ def game():
     global cdisplay
     global incdisplay
     global userinput
+    global drn
+    global drn2
+    global rall
+    global gtype
+    global allon
     correct = 0
     incorrect = 0
     digs = (str(var.get()))
@@ -70,12 +75,34 @@ def game():
     else:
         rn = randint(100, 999)
         rn2 = randint(100, 999)
+    drn = randint(10, 999)
+    drn2 = randint(1, 12)
+    rall = randint(0, 3)
+    allon = False
+    if gtype == 'all':
+        allon = True
+        rn = randint(1, 999)
+        rn2 = randint(1, 999)
+        if rall == 0:
+            gtype = '+'
+        elif rall == 1:
+            gtype = '-'
+        elif rall == 2:
+            gtype = '*'
+        elif rall == 3:
+            gtype = '/'
+    else:
+        pass
+    qdisplay = tk.Label(win3, text='')
+    qdisplay.grid(column=0, row=2, sticky=tk.E)
+    if gtype == '+' or gtype == '-' or gtype == '*':
+        qdisplay['text'] = str(rn) + ' ' + str(gtype) + ' '  + str(rn2) + ' ='
+    elif gtype == '/':
+        qdisplay['text'] = str(drn) + ' ' + str(gtype) + ' '  + str(drn2) + ' ='
     explaing = tk.Label(win3, text='Put your answer in the box and answer')
     explaing.grid(column=0, row=0)
     explaing2 = tk.Label(win3, text='See how many you can do in two minutes')
     explaing2.grid(column=0, row=1)
-    qdisplay = tk.Label(win3, text='')
-    qdisplay.grid(column=0, row=2, sticky=tk.E)
     resultd = tk.Label(win3, text='')
     resultd.grid(column=1, row=1)
     answere = tk.Entry(win3, width=15)
@@ -88,9 +115,12 @@ def game():
     cdisplay.grid(column=3, row=0, sticky=tk.E)
     incdisplay = tk.Label(win3, text="Incorrect: "+str(incorrect))
     incdisplay.grid(column=3, row=1, sticky=tk.E)
-    qdisplay['text'] = str(rn) + ' ' + str(gtype) + ' '  + str(rn2) + ' ='
+    print(rn, rn2)
+    print(drn, drn2)
+    print(gtype)
     win2.withdraw()
     win3.mainloop()
+
     
 def gamecon():
     global correct
@@ -134,14 +164,31 @@ def gamecon():
                 incorrect += 1
                 incdisplay['text']= "Incorrect: " + str(incorrect)
                 rnreset()
+        elif gtype == '/':
+            if drn / drn2 == ans:
+                correct += 1
+                cdisplay['text']= "Correct: " + str(correct)
+                rnreset()
+            else:
+                incorrect += 1
+                incdisplay['text'] = "Incorrect: " + str(incorrect)
+                rnreset()
         print(rn, rn2)
-        print(rn, rn2)
+        print(drn, drn2)
+        print(gtype)
     else:
         pass
 
 def rnreset():
     global rn
     global rn2
+    global drn
+    global drn2
+    global qdisplay
+    global rall
+    global gtype
+    global allon
+    rall = randint(0, 3)
     if digs == '1' or digs == '0':
         rn = randint(0, 9)
         rn2 = randint(0, 9)
@@ -151,7 +198,25 @@ def rnreset():
     else:
         rn = randint(100, 999)
         rn2 = randint(100, 999)
-    qdisplay['text'] = str(rn) + ' ' + str(gtype) + ' '  + str(rn2) + ' ='
+    drn = randint(10, 999)
+    drn2 = randint(1, 12)
+    if allon == True:
+        rn = randint(1, 999)
+        rn2 = randint(1, 999)
+        if rall == 0:
+            gtype = '+'
+        elif rall == 1:
+            gtype = '-'
+        elif rall == 2:
+            gtype = '*'
+        elif rall == 3:
+            gtype = '/'
+    else:
+        pass
+    if gtype == '+' or gtype == '-' or gtype == '*':
+        qdisplay['text'] = str(rn) + ' ' + str(gtype) + ' '  + str(rn2) + ' ='
+    elif gtype == '/':
+        qdisplay['text'] = str(drn) + ' ' + str(gtype) + ' ' + str(drn2) + ' ='
     
 def menu():
     global win1
@@ -171,7 +236,7 @@ problems you can do in two minutes")
     divl = tk.Label(win2, text="Division game: See how many division problems \
 you can do in two minutes")
     divl.grid(column=0, row=3, sticky=tk.W)
-    allgamel = tk.Label(win2, text="All game: consists of addition, subtraction\
+    allgamel = tk.Label(win2, text="All game: hard mode consists of addition, subtraction\
  multiplication, division problems")
     allgamel.grid(column=0, row=4, sticky=tk.W)
     addb = tk.Button(win2, text="Play", command=addg)
