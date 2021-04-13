@@ -1,19 +1,23 @@
 import tkinter as tk
 import csv
 from random import randint
+import time
 
 win2 = tk.Tk()
 win3 = tk.Tk()
+win4 = tk.Tk()
 var = tk.IntVar()
 gtype = ''
 ans = 0
 
-#make the things that the game function only creates once the game function
-#then the other things it has to do over and over can be different functions
-#for example creating the random numbers
-#comparing the user input to the answers
-#updating the scores of correct and incorrect.
-#determining if the user entered an integer or not
+# the after game function will open a csv
+# the csv will have three columns name, correct, incorrect
+# it will go through the correct and incorrect, compare the ratio and amount
+# if these are higher user will be taken to a new window.
+# the new window will ask for their name, when pressing enter it will
+# save the name correct and incorrect then go back to the menu
+# the menu will have an option to view the high scores
+# it will access the csv and write them to labels.
 
 def gamer():
     pass
@@ -43,10 +47,47 @@ def allg():
     gtype = 'all'
     game()
 
+def after_game():
+    print('after game')
+    win4.deiconify()
+    win4.geometry('800x600')
+    win4.title('Moment of Turth! ^^')
+
+    global correct
+    global incorrect
+    result_one = tk.Label(win4, text="Results:")
+    result_one.grid(column=0, row=0)
+    result_two = tk.Label(win4, text="You got "+str(correct)+" correct and "\
+                          +str(incorrect)+" incorrect.")
+    result_two.grid(column=0, row=1)
+    backtomenub = tk.Button(win4, text="Back to menu", command=menu)
+    backtomenub.grid(column=0, row=2)
+    win3.withdraw()
+    win4.mainloop()
+
+def timer():
+    global time_display
+    t=120
+    for times in range(t):
+        t-=1
+        if t >= 70:
+            time_display['text'] = '1:'+str(t-60)
+        elif t >= 60:
+            time_display['text'] = '1:0'+str(t-60)
+        elif t >=10:
+            time_display['text'] = '0:' +str(t)
+        else:
+            time_display['text'] = '0:0' +str(t)
+        win3.update()
+        time.sleep(1)
+    after_game()
+    print('this happens afterwards')       
+
 def game():
     win3.deiconify()
     win3.geometry('800x600')
     win3.title('Go, go, GO!! ^^')
+    
     global digs
     global answere
     global entryerror
@@ -63,6 +104,7 @@ def game():
     global rall
     global gtype
     global allon
+    global time_display
     correct = 0
     incorrect = 0
     digs = (str(var.get()))
@@ -109,18 +151,20 @@ def game():
     answere.grid(column=1, row=2)
     entryerror = tk.Label(win3, text='')
     entryerror.grid(column=1, row=3)
+    time_display = tk.Label(win3, text='')
+    time_display.grid(column=0, row=4)
     answerb = tk.Button(win3, text='Answer', command=gamecon)
     answerb.grid(column=2, row=2)
     cdisplay = tk.Label(win3, text="Correct: "+str(correct))
     cdisplay.grid(column=3, row=0, sticky=tk.E)
     incdisplay = tk.Label(win3, text="Incorrect: "+str(incorrect))
     incdisplay.grid(column=3, row=1, sticky=tk.E)
+    win2.withdraw()
+    timer()
     print(rn, rn2)
     print(drn, drn2)
     print(gtype)
-    win2.withdraw()
     win3.mainloop()
-
     
 def gamecon():
     global correct
@@ -220,7 +264,6 @@ def rnreset():
     
 def menu():
     global win1
-    win1.destroy()
     win2.deiconify()
     win2.geometry('800x600')
     win2.title('Maths Garden')
@@ -259,6 +302,8 @@ you can do in two minutes")
     d2.grid(column=0, row=7)
     d3 = tk.Radiobutton(win2, text="Three digits", variable=var, value=3)
     d3.grid(column=0, row=8)
+    win4.withdraw()
+    win1.withdraw()
     win3.withdraw()
     win2.mainloop()
 
@@ -275,6 +320,7 @@ def window1():
     continueb.grid(column=0, row=2, sticky=tk.N)
     win3.withdraw()
     win2.withdraw()
+    win4.withdraw()
     win1.mainloop()
 
 window1()
