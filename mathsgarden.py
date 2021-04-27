@@ -1,7 +1,11 @@
 import tkinter as tk
-import csv
 from random import randint
 import time
+from pygame import mixer
+from PIL import Image, ImageTk
+
+mixer.init()
+mixer.music.load("Ambient come back.mp3")
 
 win2 = tk.Tk()
 win3 = tk.Tk()
@@ -10,14 +14,9 @@ var = tk.IntVar()
 gtype = ''
 ans = 0
 
-# the after game function will open a csv
-# the csv will have three columns name, correct, incorrect
-# it will go through the correct and incorrect, compare the ratio and amount
-# if these are higher user will be taken to a new window.
-# the new window will ask for their name, when pressing enter it will
-# save the name correct and incorrect then go back to the menu
-# the menu will have an option to view the high scores
-# it will access the csv and write them to labels.
+# make some flowers and plants graphics and put them in the program
+# have a song play in the program
+# format where the things are on the page better.
 
 def gamer():
     pass
@@ -50,7 +49,7 @@ def allg():
 def after_game():
     print('after game')
     win4.deiconify()
-    win4.geometry('800x600')
+    win4.geometry('800x600+100+100')
     win4.title('Moment of Turth! ^^')
 
     global correct
@@ -62,6 +61,9 @@ def after_game():
     result_two.grid(column=0, row=1)
     backtomenub = tk.Button(win4, text="Back to menu", command=menu)
     backtomenub.grid(column=0, row=2)
+    plant_4 = tk.PhotoImage(master=win4, file="pic5.png")
+    plant_4_l = tk.Label(win4, image=plant_4)
+    plant_4_l.place(x=500, y=300)
     win3.withdraw()
     win4.mainloop()
 
@@ -85,7 +87,7 @@ def timer():
 
 def game():
     win3.deiconify()
-    win3.geometry('800x600')
+    win3.geometry('800x600+100+100')
     win3.title('Go, go, GO!! ^^')
     
     global digs
@@ -105,6 +107,7 @@ def game():
     global gtype
     global allon
     global time_display
+    global answere
     correct = 0
     incorrect = 0
     digs = (str(var.get()))
@@ -159,6 +162,12 @@ def game():
     cdisplay.grid(column=3, row=0, sticky=tk.E)
     incdisplay = tk.Label(win3, text="Incorrect: "+str(incorrect))
     incdisplay.grid(column=3, row=1, sticky=tk.E)
+    plant_2 = tk.PhotoImage(master=win3, file="pic3.png")
+    plant_2_l = tk.Label(win3, image=plant_2)
+    plant_2_l.place(x=500, y=200)
+    plant_3 = tk.PhotoImage(master=win3, file="pic4.png")
+    plant_3_l =tk.Label(win3, image=plant_3)
+    plant_3_l.place(x=250, y=180)
     win2.withdraw()
     timer()
     print(rn, rn2)
@@ -169,6 +178,7 @@ def game():
 def gamecon():
     global correct
     global incorrect
+    global answere
     letpass = True
     while True:
         try:
@@ -222,6 +232,7 @@ def gamecon():
         print(gtype)
     else:
         pass
+    answere.delete(0, tk.END)
 
 def rnreset():
     global rn
@@ -265,7 +276,7 @@ def rnreset():
 def menu():
     global win1
     win2.deiconify()
-    win2.geometry('800x600')
+    win2.geometry('800x600+100+100')
     win2.title('Maths Garden')
     addl = tk.Label(win2, text="Addition game: See how many addition problems \
 you can do in two minutes")
@@ -302,6 +313,9 @@ you can do in two minutes")
     d2.grid(column=0, row=7)
     d3 = tk.Radiobutton(win2, text="Three digits", variable=var, value=3)
     d3.grid(column=0, row=8)
+    plant_1 = tk.PhotoImage(master=win2, file="pic2.png")
+    plant_1_l = tk.Label(win2, image=plant_1)
+    plant_1_l.grid(row=9, column=9)
     win4.withdraw()
     win1.withdraw()
     win3.withdraw()
@@ -310,14 +324,17 @@ you can do in two minutes")
 def window1():
     global win1
     win1 = tk.Tk()
-    win1.geometry('800x600')
+    win1.geometry('800x600+100+100')
     win1.title('Maths Garden')
-    heading = tk.Label(win1, text="Maths Garden")
-    heading.grid(column=0, row=0, sticky=tk.N)
-    explain1 = tk.Label(win1, text='It is important to know maths')
-    explain1.grid(column=0, row=1, sticky=tk.N)
+    logo = tk.PhotoImage(master = win1, file="IMG_0201.png")
+    heading = tk.Label(win1, image=logo)
+    heading.place(x=200, y=200)
+    explain1 = tk.Label(win1, text='It is important to know arithmatic, even \
+if you have a calculator. \nBeing able to do this in your head can help you \
+quickly solve problems.')
+    explain1.place(x=200, y=300)
     continueb = tk.Button(win1, text="Continue", command=menu)
-    continueb.grid(column=0, row=2, sticky=tk.N)
+    continueb.place(x=380, y=400)
     win3.withdraw()
     win2.withdraw()
     win4.withdraw()
