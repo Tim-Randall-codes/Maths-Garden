@@ -2,21 +2,16 @@ import tkinter as tk
 from random import randint
 import time
 from pygame import mixer
-from PIL import Image, ImageTk
 
 mixer.init()
-mixer.music.load("Ambient come back.mp3")
-
+mixer.music.load("song.mp3")
+mixer.music.play(loops = -1)
 win2 = tk.Tk()
 win3 = tk.Tk()
 win4 = tk.Tk()
 var = tk.IntVar()
 gtype = ''
 ans = 0
-
-# make some flowers and plants graphics and put them in the program
-# have a song play in the program
-# format where the things are on the page better.
 
 def gamer():
     pass
@@ -54,13 +49,27 @@ def after_game():
 
     global correct
     global incorrect
+    percentage = correct / (correct + incorrect) * 100
+    if percentage <= 50:
+        advice = "You need to go slower and strive for greater accuracy."
+    elif percentage <= 70:
+        advice = "Good effort, but more accuracy is required"
+    elif percentage <= 90:
+        advice = "Good work, maybe try a bit slower for more accuracy"
+    else:
+        advice = "Excellent accuracy, try to get faster and faster without \
+sacrificing this"
     result_one = tk.Label(win4, text="Results:")
     result_one.grid(column=0, row=0)
     result_two = tk.Label(win4, text="You got "+str(correct)+" correct and "\
                           +str(incorrect)+" incorrect.")
     result_two.grid(column=0, row=1)
+    result_three = tk.Label(win4, text="You got " +str(percentage)+ " correct")
+    result_three.grid(column=0, row=2)
+    result_four = tk.Label(win4, text=advice)
+    result_four.grid(column=0, row=3)
     backtomenub = tk.Button(win4, text="Back to menu", command=menu)
-    backtomenub.grid(column=0, row=2)
+    backtomenub.grid(column=0, row=4)
     plant_4 = tk.PhotoImage(master=win4, file="pic5.png")
     plant_4_l = tk.Label(win4, image=plant_4)
     plant_4_l.place(x=500, y=300)
@@ -335,6 +344,7 @@ quickly solve problems.')
     explain1.place(x=200, y=300)
     continueb = tk.Button(win1, text="Continue", command=menu)
     continueb.place(x=380, y=400)
+    menubar1 = tk.Menu(win1)
     win3.withdraw()
     win2.withdraw()
     win4.withdraw()
